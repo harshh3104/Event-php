@@ -26,10 +26,12 @@
             <div class="icon_info">
             <ul class="user_profile_dd">
                 <li>
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="images/layout_img/user_logo.png" alt="#" /><span class="name_user"><?php echo isset($_SESSION['mail']) ? $_SESSION['mail'] : 'Guest'; ?></span><i class="fa fa-caret-down" style="font-size:20px;"></i></a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="logout.php"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
-                </div>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <img class="img-responsive rounded-circle" src="images/layout_img/user_logo.png" alt="#" />
+                    <span class="name_user"><?php echo isset($_SESSION['email']) ? ucfirst($_SESSION['email']) : 'Guest'; ?></span><i class="fa fa-caret-down" style="font-size:20px;"></i></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="logout.php"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
+                    </div>
                 </li>
             </ul>
             </div>

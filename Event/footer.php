@@ -38,7 +38,7 @@
 		<h3>Contact Us</h3>		
 		<div class="contact-btm">
 			<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
-			<p>C.B.Patel Computer College,&nbsp;New City Light Road,&nbsp;Bharthana(Vesu),<br>Surat-395017.</p>
+			<p>New Citylight,Surat</p>
 		</div><br>
 		<div class="contact-btm">
 			<span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>

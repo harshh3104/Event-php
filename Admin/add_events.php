@@ -1,11 +1,13 @@
 <?php 
-session_start();
-if(!isset($_SESSION['mail'])){
-   header("Location: index.php");
-   exit();
-}
+   session_name('admin_session');
+   session_start();
+   if(!isset($_SESSION['email'])){
+      header("Location: index.php");
+      exit();
+   }
    include 'connection.php';
    $title=$desc=$venue=$img=$pro=$date=$time=$cap="";
+   $maxDate = date('Y-m-d', strtotime('+1 year'));
 
    if(isset($_GET['id']))
    {
@@ -24,6 +26,22 @@ if(!isset($_SESSION['mail'])){
    
    if(isset($_POST['btn']))
    {
+      $eventDate = $_POST['date'];
+      $today     = date('Y-m-d');
+      $maxLimit  = date('Y-m-d', strtotime('+1 year'));
+
+      if ($eventDate < $today || $eventDate > $maxLimit) {
+         echo "<script>
+                  Swal.fire({
+                     icon: 'error',
+                     title: 'Invalid Event Date',
+                     text: 'Event date must be within 1 year from today.',
+                     confirmButtonColor: '#d33'
+                  });
+               </script>";
+         exit();
+      }
+
       if(!empty($_GET['id']))
       {
          move_uploaded_file($_FILES['profile']['tmp_name'],"images/img/".$_FILES['profile']['name']);
@@ -47,12 +65,16 @@ if(!isset($_SESSION['mail'])){
 <html>
    <head>
       <title>Add Events | Admin</title>
+      <!-- SweetAlert2 -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
       <?php 
          include 'links.php';
       ?>
+
       <style>
          label {
-            font-weight: bold; /* This will keep the bold styling */
+            font-weight: bold;
             color: black;
          }
       </style>
@@ -81,50 +103,51 @@ if(!isset($_SESSION['mail'])){
                         </div>
                      </div>
                   </div>
-                  <?php if(isset($_POST['btn'])) { if(!empty($_GET['id'])) { ?>
-                  <div class='alert alert-success'>Event Updated!</div>
-                  <?php } else { ?>
-                  <div class='alert alert-success'>Event Added!</div>
-                  <?php }  } ?>
+
                   <!-- Add Event Form -->
                   <form method="POST" enctype="multipart/form-data">
                   <div class="form-group">
-                     <label for="title">Enter Title</label>
-                     <input type="text" name="title" value="<?php echo $title;?>"  id="title" class="form-control">
+                     <label for="title">Title</label>
+                     <input type="text" name="title" placeholder="Enter Title" value="<?php echo $title;?>" id="title" class="form-control">
                   </div>
 
                   <div class="form-group">
-                     <label for="desc">Enter Description</label>
-                     <textarea name="desc" id="desc" class="form-control"><?php echo $desc;?></textarea>
+                     <label for="desc">Description</label>
+                     <textarea name="desc" id="desc" placeholder="Enter Description" class="form-control"><?php echo $desc;?></textarea>
                   </div>
 
                   <div class="form-group">
-                     <label for="venue">Enter Venue</label>
-                     <input type="text" name="venue" id="venue" value="<?php echo $venue;?>" class="form-control">
+                     <label for="venue">Venue</label>
+                     <input type="text" name="venue" id="venue" placeholder="Enter Venue" value="<?php echo $venue;?>" class="form-control">
                   </div>
 
                   <div class="form-group">
-                     <label for="profile">Enter Image</label>
+                     <label for="profile">Event Image</label>
                      <input type="file" name="profile" id="profile" class="form-control"><?php echo $pro;?>
                   </div>
 
-                  <div class="form-group">
-                     <label for="date">Enter Date</label>
-                     <input type="date" name="date" id="date" value="<?php echo $date;?>" min="<?php echo date('Y-m-d'); ?>" class="form-control">
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="date">Date</label>
+                           <input type="date" name="date" id="date" value="<?php echo $date;?>" min="<?php echo date('Y-m-d'); ?>" max="<?php echo $maxDate; ?>" class="form-control">
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="time">Time</label>
+                           <input type="time" name="time" id="time" value="<?php echo $time;?>" class="form-control">
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="cap">Capacity</label>
+                           <input type="text" name="capacity" id="cap" placeholder="Enter Capacity" value="<?php echo $cap;?>" class="form-control">
+                        </div>
+                     </div>
                   </div>
-
-                  <div class="form-group">
-                     <label for="time">Enter Time</label>
-                     <input type="time" name="time" id="time" value="<?php echo $time;?>" class="form-control">
-                  </div>
-
-                  <div class="form-group">
-                     <label for="cap">Enter Capacity</label>
-                     <input type="text" name="capacity" id="cap" value="<?php echo $cap;?>" class="form-control">
-                  </div>
-
                   <div class="form-group">                  
-                     <input type="submit" name="btn" value="<?php if(isset($_GET['id'])){ echo 'Update'; } else { echo 'Insert'; }?>" class="btn btn-success">
+                     <input type="submit" style="height: 40px" name="btn" value="<?php if(isset($_GET['id'])){ echo 'Update'; } else { echo 'Insert'; }?>" class="btn btn-success w-25">
                   </div>
                   </form>
                   <!-- footer -->
@@ -156,5 +179,15 @@ if(!isset($_SESSION['mail'])){
       <!-- custom js -->
       <script src="js/custom.js"></script>
       <script src="js/chart_custom_style1.js"></script>
+      <?php if (isset($_POST['btn'])): ?>
+      <script>
+         Swal.fire({
+            icon: 'success',
+            title: 'Event Added Successfully',
+            text: 'New event has been added',
+            confirmButtonColor: '#4c6fff'
+         });
+      </script>
+      <?php unset($_SESSION['added']); endif; ?>
    </body>
 </html>

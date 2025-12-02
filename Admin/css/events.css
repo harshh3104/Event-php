@@ -1,0 +1,78 @@
+body {
+   background: #f5f7fa;
+}
+
+/* Page Header */
+.page-header-custom {
+   background: linear-gradient(135deg, #4f46e5, #9333ea);
+   padding: 25px 30px;
+   border-radius: 12px;
+   color: #fff;
+   margin-bottom: 25px;
+   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Search bar */
+.search-box {
+   max-width: 400px;
+   display: flex;
+   gap: 10px;
+   margin-bottom: 20px;
+}
+
+.table-custom {
+   border-radius: 12px;
+   overflow: hidden;
+   box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+.table-custom thead {
+   background: #1e293b;
+   color: #fff;
+}
+.table-custom tbody tr:hover {
+   background: #f1f5f9;
+   transition: 0.2s;
+}
+.table td, .table th {
+   vertical-align: middle;
+   font-size: 15px;
+}
+
+/* Profile image */
+.event-img {
+   height: 70px;
+   width: 70px;
+   border-radius: 12px;
+   object-fit: cover;
+   box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+/* Action buttons */
+.btn-action {
+   padding: 6px 10px;
+   margin: 2px;
+   border-radius: 6px;
+   font-size: 14px;
+}
+.btn-edit {
+   background: #2563eb;
+   color: white;
+}
+.btn-edit:hover {
+   background: #1d4ed8;
+}
+.btn-delete {
+   background: #dc2626;
+   color: white;
+}
+.btn-delete:hover {
+   background: #b91c1c;
+}
+
+/* Card Wrapper */
+.card-custom {
+   padding: 25px;
+   border-radius: 12px;
+   background: white;
+   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}

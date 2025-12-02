@@ -1,100 +1,121 @@
 <?php
-session_start();
-if(!isset($_SESSION['mail'])){
-   header("Location:index.php");
-   exit();
-}
+   session_name('admin_session');
+   session_start();
+   if(!isset($_SESSION['email'])){
+      header("Location:index.php");
+      exit();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <title>Dashboard | Admin</title>
-      <?php 
-         include 'links.php';
-      ?>
-      <style>
-         .card {
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-         }
-         .card-icon {
-            font-size: 2.5rem;
-         }
-      </style>
-   </head>
-   <body class="dashboard dashboard_1">
-      <div class="full_container">
-         <div class="inner_container">
-            <?php
-               include 'header.php';            
-            ?>
-            <div id="content">
-               <?php 
-                  include 'topbar.php';
-               ?>
-               <div class="midde_cont">
-                  <div class="container-fluid">
-                     <h1 class="mt-4">Admin Dashboard</h1>
-                     <br>
-                     <?php
-                        if (isset($_SESSION['success_message'])) 
-                        {
-                           echo '<div class="alert alert-success text-center" role="alert">' . $_SESSION['success_message'] . '</div>';
-                           unset($_SESSION['success_message']);
-                        }
-                     ?>
-                     <br>
-                     <div class="row">
-                        <div class="col-md-3">
-                           <div class="card text-white bg-primary mb-3">
-                              <div class="card-body d-flex justify-content-between align-items-center">
-                                 <div>
-                                    <h5 class="card-title">Total Events</h5>
-                                    <p class="card-text h2">25</p>
-                                 </div>
-                                 <i class="fa fa-calendar-check-o card-icon"></i>
-                              </div>
-                           </div>
+<head>
+   <title>Dashboard | Admin</title>
+   <!-- SweetAlert2 -->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <link rel="stylesheet" href="css/dashboard.css">
+   <?php include 'links.php'; ?>
+
+</head>
+<body class="dashboard dashboard_1">
+
+<div class="full_container">
+   <div class="inner_container">
+
+      <?php include 'header.php'; ?>
+
+      <div id="content">
+
+         <?php include 'topbar.php'; ?>
+
+         <div class="midde_cont">
+            <div class="container-fluid">
+
+               <!-- PAGE TITLE -->
+               <h1 class="page-title mt-3">Admin Dashboard</h1>
+               <p class="text-muted mb-4"><i class="fa fa-home"></i> / Admin / Dashboard</p>
+
+               <!-- DASHBOARD CARDS -->
+               <div class="row">
+                  <div class="col-md-3 mb-4">
+                     <div class="stat-card bg-blue">
+                        <div>
+                           <p class="stat-title">Total Events</p>
+                           <h1 class="stat-value">20</h1>
+                           <small>+3 added this month</small>
                         </div>
-                        <div class="col-md-3">
-                           <div class="card text-white bg-success mb-3">
-                              <div class="card-body d-flex justify-content-between align-items-center">
-                                 <div>
-                                    <h5 class="card-title">Total Participants</h5>
-                                    <p class="card-text h2">540</p>
-                                 </div>
-                                 <i class="fa fa-users card-icon"></i>
-                              </div>
-                           </div>
+                        <i class="fa fa-calendar-check-o stat-icon"></i>
+                     </div>
+                  </div>
+
+                  <div class="col-md-3 mb-4">
+                     <div class="stat-card bg-green">
+                        <div>
+                           <p class="stat-title">Total Participants</p>
+                           <h1 class="stat-value">500</h1>
+                           <small>+120 vs last month</small>
                         </div>
-                        <div class="col-md-3">
-                           <div class="card text-white bg-info mb-3">
-                              <div class="card-body d-flex justify-content-between align-items-center">
-                                 <div>
-                                    <h5 class="card-title">Upcoming Events</h5>
-                                    <p class="card-text h2">3</p>
-                                 </div>
-                                 <i class="fa fa-calendar-plus-o card-icon"></i>
-                              </div>
-                           </div>
+                        <i class="fa fa-users stat-icon"></i>
+                     </div>
+                  </div>
+
+                  <div class="col-md-3 mb-4">
+                     <div class="stat-card bg-purple">
+                        <div>
+                           <p class="stat-title">Upcoming Events</p>
+                           <h1 class="stat-value">5</h1>
+                           <small>2 this week</small>
                         </div>
-                        <div class="col-md-3">
-                           <div class="card text-white bg-warning mb-3">
-                              <div class="card-body d-flex justify-content-between align-items-center">
-                                 <div>
-                                    <h5 class="card-title">Total Users</h5>
-                                    <p class="card-text h2">150</p>
-                                 </div>
-                                 <i class="fa fa-user-circle-o card-icon"></i>
-                              </div>
+                        <i class="fa fa-calendar-plus-o stat-icon"></i>
+                     </div>
+                  </div>
+
+                  <div class="col-md-3 mb-4">
+                     <div class="stat-card bg-yellow">
+                        <div>
+                           <p class="stat-title">Total Users</p>
+                           <h1 class="stat-value">150</h1>
+                           <small>5 new today</small>
+                        </div>
+                        <i class="fa fa-user-circle-o stat-icon"></i>
+                     </div>
+                  </div>
+
+               </div>
+               
+               <div class="row">
+                  <div class="col-lg-5 mb-4">
+                     <div class="card">
+                        <div class="card-header">Overview (Last 6 Months)</div>
+                        <div class="card-body">
+                           <canvas id="overviewChart" height="180"></canvas>
+                        </div>
+                     </div>
+                     
+                     <div class="card mt-4">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                           <span class="card-section-title">Quick Actions</span>
+                        </div>
+                        <div class="card-body">
+                           <div class="d-flex flex-wrap">
+                              <a href="add_events.php" class="btn btn-light btn-sm mr-2 mb-2">
+                                 <i class="fa fa-plus-circle mr-1"></i> Create Event
+                              </a>
+                              <a href="show_events.php" class="btn btn-light btn-sm mr-2 mb-2">
+                                 <i class="fa fa-calendar mr-1"></i> Manage Events
+                              </a>
+                              <a href="show_users.php" class="btn btn-light btn-sm mr-2 mb-2">
+                                 <i class="fa fa-users mr-1"></i> View Users
+                              </a>
                            </div>
                         </div>
                      </div>
-                  
-                     <div class="card mt-4">
-                        <div class="card-header" style="font-weight:bold">Upcoming Events</div>
+                  </div>
+
+                  <div class="col-lg-7 mb-4">
+                     <div class="card">
+                        <div class="card-header">Upcoming Events</div>
                         <div class="card-body">
-                           <table class="table table-striped">
+                           <table class="table table-hover">
                               <thead>
                                  <tr>
                                     <th>Event</th>
@@ -107,39 +128,44 @@ if(!isset($_SESSION['mail'])){
                               <tbody>
                                  <tr>
                                     <td>Cultural Fest</td>
-                                    <td>4 Oct 2025</td>
-                                    <td>Cultural</td>
+                                    <td>14 Dec 2025</td>
+                                    <td><span class="badge bg-info text-white">Cultural</span></td>
                                     <td>120</td>
-                                    <td><span class="badge bg-warning">Upcoming</span></td>
+                                    <td><span class="badge bg-warning text-dark">Upcoming</span></td>
                                  </tr>
                                  <tr>
                                     <td>Hackathon</td>
-                                    <td>15 Oct 2025</td>
-                                    <td>Technical</td>
+                                    <td>26 Dec 2025</td>
+                                    <td><span class="badge bg-primary">Technical</span></td>
                                     <td>85</td>
-                                    <td><span class="badge bg-warning">Upcoming</span></td>
+                                    <td><span class="badge bg-warning text-dark">Upcoming</span></td>
                                  </tr>
                                  <tr>
                                     <td>Box Cricket</td>
-                                    <td>31 Oct 2025</td>
-                                    <td>Sports</td>
-                                    <td>60</td>
-                                    <td><span class="badge bg-warning">Upcoming</span></td>
+                                    <td>08 Jan 2026</td>
+                                    <td><span class="badge bg-success">Sports</span></td>
+                                    <td>70</td>
+                                    <td><span class="badge bg-warning text-dark">Upcoming</span></td>
                                  </tr>
                               </tbody>
                            </table>
                         </div>
                      </div>
-                     
-                     <div class="card mt-4">
-                        <div class="card-header" style="font-weight:bold">Recently Registered Users</div>
+                  </div>
+
+               </div>
+               
+               <div class="row">
+                  <div class="col-lg-6 mb-4">
+                     <div class="card">
+                        <div class="card-header">Recently Registered Users</div>
                         <div class="card-body">
-                           <table class="table table-striped">
+                           <table class="table table-hover">
                               <thead>
                                  <tr>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Registration Date</th>
+                                    <th>Date</th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -151,22 +177,24 @@ if(!isset($_SESSION['mail'])){
                                  <tr>
                                     <td>Jane Smith</td>
                                     <td>jane.smith@example.com</td>
-                                    <td>19 Sep 2025</td>
+                                    <td>08 Apr 2025</td>
                                  </tr>
                                  <tr>
                                     <td>Peter Jones</td>
                                     <td>peter.jones@example.com</td>
-                                    <td>18 Sep 2025</td>
+                                    <td>26 Oct 2025</td>
                                  </tr>
                               </tbody>
                            </table>
                         </div>
                      </div>
+                  </div>
 
-                     <div class="card mt-4">
-                        <div class="card-header" style="font-weight:bold">Popular Events</div>
+                  <div class="col-lg-6 mb-4">
+                     <div class="card">
+                        <div class="card-header">Popular Events</div>
                         <div class="card-body">
-                           <table class="table table-striped">
+                           <table class="table table-hover">
                               <thead>
                                  <tr>
                                     <th>Event</th>
@@ -191,25 +219,55 @@ if(!isset($_SESSION['mail'])){
                         </div>
                      </div>
                   </div>
+
                </div>
-               </div>
+
+            </div>
          </div>
+
       </div>
-      <script src="js/jquery.min.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-      <script src="js/animate.js"></script>
-      <script src="js/bootstrap-select.js"></script>
-      <script src="js/owl.carousel.js"></script> 
-      <script src="js/Chart.min.js"></script>
-      <script src="js/Chart.bundle.min.js"></script>
-      <script src="js/utils.js"></script>
-      <script src="js/analyser.js"></script>
-      <script src="js/perfect-scrollbar.min.js"></script>
-      <script>
-         var ps = new PerfectScrollbar('#sidebar');
-      </script>
-      <script src="js/chart_custom_style1.js"></script>
-      <script src="js/custom.js"></script>
-   </body>
+
+   </div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/Chart.min.js"></script>
+
+<script>
+var ctx = document.getElementById("overviewChart");
+
+new Chart(ctx, {
+   type: "line",
+   data: {
+      labels: ["Jun", "Jul", "Aug", "Sep", "Oct", "Nov"],
+      datasets: [{
+         label: "Registrations",
+         data: [80, 120, 150, 200, 260, 300],
+         backgroundColor: "rgba(52, 152, 219,0.2)",
+         borderColor: "#3498db",
+         borderWidth: 3,
+         tension: 0.4,
+         fill: true
+      }]
+   },
+   options: {
+      responsive: true,
+      plugins: {
+         legend: { display: false }
+      }
+   }
+});
+</script>
+<?php if (isset($_SESSION['done'])): ?>
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Logged in successful',
+        text: 'You have logged in successfully.',
+        confirmButtonColor: '#4c6fff'
+    });
+</script>
+<?php unset($_SESSION['done']); endif; ?>
+</body>
 </html>

@@ -1,10 +1,13 @@
-<?php 
-session_start();
-$_SESSION["mail"]="";
-$_SESSION["pass"]="";
-// $_SESSION['logout_message'] = "You have logged out successfully!";
-session_destroy();
-session_start();
-$_SESSION['logout_message'] = "You have logged out successfully!";
-header("location:index.php");
+<?php
+    session_name('admin_session');
+    session_start();
+    
+    session_unset();    
+    session_destroy();
+
+    session_start();
+    $_SESSION['logout_message'] = true;
+
+    header("Location: index.php");
+    exit();
 ?>

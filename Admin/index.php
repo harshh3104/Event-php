@@ -1,4 +1,5 @@
 <?php
+   session_name('admin_session');
    session_start();
    include 'connection.php';
 ?>
@@ -72,7 +73,6 @@ $(document).ready(function(){
 		}
 	});
    
-   // New JavaScript to remove errors on click
    $('#em').on('keyup', function() {
       $('.emailerror').text('');
       $('.alert').remove();
@@ -105,29 +105,29 @@ $(document).ready(function(){
 </script>
    <body class="inner_page login">
       <?php
-        if(isset($_POST['login']))
-        {
+         if(isset($_POST['login']))
+         {
             $str="select * from users where email='".$_POST['maill']."' AND password='".$_POST['pswd']."'";
-            // echo $str;
+            
             $result=mysqli_query($conn,$str);
             $row=mysqli_fetch_array($result);
             $count=mysqli_num_rows($result);
-            //echo $count;die;
-            
+                        
             if($count>0)
             {
                if($row['utype'] == 'Admin')
-                {
-                   $_SESSION['mail'] = $row['email'];
-                   $_SESSION['mail'] = $row['name'];
-                   $_SESSION['utype'] = $row['utype'];
-                   $_SESSION['success_message'] = "You have logged in successfully!";
-                   header('location:dashboard.php');
-                }
-                else
-                {
-                   $invalid = "<center><p class='invalid-login-message' style='color:red; font-weight:bold;'>Users cannot log in to the admin panel!</p></center>";
-                }
+               {
+                  $_SESSION['done'] = true;
+                  $_SESSION['email'] = $row['email'];
+                  $_SESSION['email'] = $row['name'];
+                  $_SESSION['utype'] = $row['utype'];
+                  $_SESSION['success_message'] = "You have logged in successfully!";
+                  header('location:dashboard.php');
+               }
+               else
+               {
+                  $invalid = "<center><p class='invalid-login-message' style='color:red; font-weight:bold;'>Users cannot log in to the admin panel!</p></center>";
+               }
             }
             else
             {
@@ -148,7 +148,7 @@ $(document).ready(function(){
                      <?php
                         if(isset($_SESSION['logout_message'])) 
                         {
-                           echo '<div class="alert alert-danger text-center" role="alert">' . $_SESSION['logout_message'] . '</div>';
+                           echo '<div class="alert alert-danger text-center" role="alert">You have been logged out successfully!</div>';
                            unset($_SESSION['logout_message']); // Clear the message after displaying
                         }
                      ?>

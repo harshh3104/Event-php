@@ -1,6 +1,7 @@
 <?php 
-	session_start();
+	include "head.php";
 ?>
+
 <div class="header-w3layouts"> 
 	<!-- Navigation -->
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -27,11 +28,13 @@
 					<?php if(isset($_SESSION['mail'])){ ?>
 					<li><a class="hvr-sweep-to-right" href="my_bookingss.php">My Bookings</a></li>
 					<li><a class="hvr-sweep-to-right" href="logout.php">Logout</a></li>
+					<li class="navbar-text" style="font-size:16px; color:#fff; margin-left:35px; margin-top:10px;">
+        				Hello, <?php echo ucfirst($_SESSION['uname']); ?>
+					</li>
 					<?php } else { ?>
 					<li><a class="hvr-sweep-to-right" href="login.php">Login</a></li>
 					<li><a class="hvr-sweep-to-right" href="evereg.php">Register</a></li>
 					<?php } ?>
-
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->

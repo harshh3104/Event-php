@@ -1,3 +1,8 @@
+<?php
+	if (session_status() === PHP_SESSION_NONE) {
+    	session_start();
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,7 +18,8 @@
 <!-- <link href="css/font-awesome.css" rel="stylesheet">		font-awesome icons -->
 <!-- //Custom Theme files --> 
 <!-- js -->
-<script src="js/jquery.min.js"></script>  
+<script src="js/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- //js -->
 <!-- web-fonts -->  
 <link href="http://fonts.googleapis.com/css?family=Josefin+Sans:300,400,600,700" rel="stylesheet">

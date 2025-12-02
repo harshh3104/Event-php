@@ -1,0 +1,88 @@
+body {
+   background: #f4f6fa;
+   font-family: "Poppins", sans-serif;
+}
+
+/* Remove old template heading */
+.page_title, .midde_cont h2 {
+   display: none !important;
+}
+
+.page-title {
+   font-weight: 700;
+   font-size: 26px;
+   color: #2c3e50;
+}
+
+/* Stat Cards */
+.stat-card {
+   background: #fff;
+   padding: 22px;
+   border-radius: 14px;
+   box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   transition: 0.3s;
+}
+
+.stat-card:hover {
+   transform: translateY(-4px);
+   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.stat-title {
+   font-size: 14px;
+   text-transform: uppercase;
+   font-weight: 600;
+   opacity: 0.7;
+}
+
+.stat-value {
+   font-size: 32px;
+   font-weight: 700;
+   margin: 5px 0;
+}
+
+.stat-icon {
+   font-size: 42px;
+   opacity: 0.5;
+}
+
+/* Colored backgrounds */
+.bg-blue {
+   background: linear-gradient(90deg, #2193b0, #6dd5ed);
+   color: #fff;
+}
+.bg-green {
+   background: linear-gradient(90deg, #11998e, #38ef7d);
+   color: #fff;
+}
+.bg-purple {
+   background: linear-gradient(90deg, #654ea3, #eaafc8);
+   color: #fff;
+}
+.bg-yellow {
+   background: linear-gradient(90deg, #f7971e, #ffd200);
+   color: #fff;
+}
+
+/* Table Card */
+.card {
+   border-radius: 14px;
+   box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+   border: none;
+}
+
+.card-header {
+   font-weight: 600;
+   background: #fff !important;
+   padding: 16px;
+   border-bottom: 1px solid #eee;
+}
+
+.badge {
+   padding: 6px 12px;
+   border-radius: 20px;
+   font-size: 12px;
+}
